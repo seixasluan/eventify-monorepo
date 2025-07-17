@@ -1,3 +1,3 @@
 export default function Home() {
-  return <h1>Ola Mundo</h1>;
+  return <h1>Eventify</h1>;
 }
