@@ -8,8 +8,13 @@ import fastifyStatic from "@fastify/static";
 import path from "path";
 import swagger from "@fastify/swagger";
 import swaggerUI from "@fastify/swagger-ui";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 async function startServer() {
+  const PORT = process.env.PORT;
+
   const fastify = Fastify({
     logger: true,
   });
@@ -147,8 +152,8 @@ async function startServer() {
   );
 
   try {
-    await fastify.listen({ port: 3000, host: "0.0.0.0" });
-    fastify.log.info(`Server listening on port 3000`);
+    await fastify.listen({ port: Number(PORT), host: "0.0.0.0" }); // change for the next
+    fastify.log.info(`Server listening on port ${PORT}`);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);

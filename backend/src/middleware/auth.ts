@@ -5,8 +5,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
-
+const JWT_SECRET = process.env.JWT_SECRET;
+console.log(JWT_SECRET);
 export async function authenticate(
   request: FastifyRequest,
   reply: FastifyReply
@@ -22,7 +22,7 @@ export async function authenticate(
 
     const token = authHeader.split(" ")[1]; // Bearer <token>
 
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, String(JWT_SECRET));
     (request as any).user = decoded;
   } catch (error) {
     return reply
