@@ -7,7 +7,11 @@ module.exports = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "encrypted-tbn0.gstatic.com",
+      },
     ],
-    dangerouslyAllowSVG: true, // permite carregar SVGs externos
+    dangerouslyAllowSVG: true,
   },
 };
