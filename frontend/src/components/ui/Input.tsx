@@ -1,0 +1,19 @@
+type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  label?: string;
+};
+
+export function Input({ label, ...props }: InputProps) {
+  return (
+    <div>
+      {label && (
+        <label className="block text-sm font-medium text-zinc-700">
+          <b>{label}</b>
+        </label>
+      )}
+      <input
+        {...props}
+        className="w-full mt-1 px-4 py-2 border border-zinc-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-zinc-900 placeholder:text-zinc-400"
+      />
+    </div>
+  );
+}
