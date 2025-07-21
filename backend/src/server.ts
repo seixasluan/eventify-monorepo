@@ -9,6 +9,7 @@ import path from "path";
 import swagger from "@fastify/swagger";
 import swaggerUI from "@fastify/swagger-ui";
 import dotenv from "dotenv";
+import fastifyCors from "@fastify/cors";
 
 dotenv.config();
 
@@ -19,6 +20,10 @@ async function startServer() {
     logger: true,
   });
 
+  await fastify.register(fastifyCors, {
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
   await fastify.register(swagger, {
     openapi: {
       info: {

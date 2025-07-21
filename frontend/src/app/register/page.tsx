@@ -5,16 +5,45 @@ import AuthLayout from "@/components/layout/AuthLayout";
 import { Input } from "@/components/ui/Input";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { Button } from "@/components/ui/Button";
+import { SelectRole } from "@/components/ui/SelectRole";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<"BUYER" | "ORGANIZER">("BUYER");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ name, email, password });
+
+    try {
+      const res = await fetch("http://localhost:4000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          role,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Registration failed");
+        return;
+      }
+
+      alert("Account created successfully!");
+      router.push("/login");
+    } catch (error) {
+      alert("Something went wrong: " + error);
+    }
   };
 
   return (
@@ -45,6 +74,11 @@ export default function RegisterPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
           placeholder="••••••••"
+        />
+        <SelectRole
+          onChange={(e) => setRole(e.target.value as "BUYER" | "ORGANIZER")}
+          value={role}
+          required
         />
         <Button type="submit">Register</Button>
       </form>
