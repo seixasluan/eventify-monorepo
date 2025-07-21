@@ -24,9 +24,9 @@ export async function registerHandler(
     return reply.status(400).send(errorResponse("Email is already in use!"));
   }
 
-  const BCRYPT_SALT = process.env.BCRYPT_SALT || 10;
+  const BCRYPT_SALT = process.env.BCRYPT_SALT;
 
-  const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT);
+  const hashedPassword = await bcrypt.hash(password, Number(BCRYPT_SALT));
 
   const user = await prisma.user.create({
     data: {
@@ -38,7 +38,7 @@ export async function registerHandler(
   });
 
   const token = generateToken({ userId: user.id, role: user.role });
-  return reply.send(successResponse(token));
+  return reply.send({ token });
 }
 
 export async function loginHandler(
@@ -68,5 +68,5 @@ export async function loginHandler(
   }
 
   const token = generateToken({ userId: user.id, role: user.role });
-  return reply.send(successResponse(token));
+  return reply.send({ token });
 }
