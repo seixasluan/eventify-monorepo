@@ -24,6 +24,7 @@ model Event {
   date          DateTime
   price         Float
   imageUrl      String?
+  location      String
   totalTickets  Int      @default(100)
   ticketsSold   Int      @default(0)
   organizer     User     @relation("OrganizerEvents", fields: [organizerId], references: [id])

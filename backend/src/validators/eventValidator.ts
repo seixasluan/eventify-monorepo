@@ -5,6 +5,7 @@ export interface EventInput {
   price: string | number;
   imageUrl: string;
   totalTickets: number | string;
+  location: string;
 }
 
 function parseDateFromDDMMYYYY(input: string): Date | null {
@@ -72,6 +73,11 @@ export function validateEventInput(data: any): {
   // image
   if (!data.imageUrl || typeof data.imageUrl !== "string") {
     errors.push("Image URL is required.");
+  }
+
+  // location
+  if (!data.location || typeof data.location !== "string") {
+    errors.push("Location is required.");
   }
 
   // totalTickets

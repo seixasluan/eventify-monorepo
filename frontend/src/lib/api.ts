@@ -10,3 +10,14 @@ export async function fetchEvents() {
 
   return res.json();
 }
+
+export async function fetchEventById(id: string) {
+  const res = await fetch(`http://localhost:4000/events/${id}`, {
+    cache: "no-store",
+  });
+
+  if (!res.ok) return null;
+
+  const json = await res.json();
+  return json.data;
+}
