@@ -1,4 +1,3 @@
-// types.ts
 export type UserPublic = {
   id: number;
   name: string;
@@ -11,6 +10,7 @@ export type Event = {
   date: string;
   price: number;
   imageUrl: string;
+  location: string;
   totalTickets: number;
   ticketsSold: number;
   organizerId: number;

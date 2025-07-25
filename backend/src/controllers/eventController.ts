@@ -4,6 +4,7 @@ import { validateEventInput } from "../validators/eventValidator";
 import path from "path";
 import fs from "fs";
 import { errorResponse, successResponse } from "../utils/response";
+import { generateGoogleMapsLink } from "../utils/getLocationLink";
 
 export async function createEventHandler(
   request: FastifyRequest,
@@ -26,6 +27,7 @@ export async function createEventHandler(
         date: parsedDate,
         price: parseFloat(data.price),
         imageUrl: data.imageUrl,
+        location: data.location,
         totalTickets: parsedTotalTickets,
         organizerId: user.userId,
       },
@@ -64,7 +66,11 @@ export async function getEventHandler(
         .send(errorResponse("Event not found.", "NOT_FOUND"));
     }
 
-    return reply.send(successResponse(event));
+    const googleMapsUrl = generateGoogleMapsLink(event.location);
+
+    const data = { ...event, mapsUrl: googleMapsUrl };
+
+    return reply.send(successResponse(data));
   } catch (error) {
     console.error(error);
     return reply
