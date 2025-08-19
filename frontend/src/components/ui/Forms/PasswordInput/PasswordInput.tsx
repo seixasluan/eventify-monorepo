@@ -1,11 +1,14 @@
+// react
 import { useState, InputHTMLAttributes } from "react";
+
+// icon
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 type PasswordInputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
 };
 
-export function PasswordInput({ label, ...props }: PasswordInputProps) {
+export default function PasswordInput({ label, ...props }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (

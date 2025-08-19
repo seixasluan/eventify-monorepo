@@ -1,6 +1,17 @@
-import Link from "next/link";
+"use client";
 
-export default function HeroSection() {
+import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
+
+export const HeroSection = () => {
+  const { user } = useAuth();
+
+  const createEventHref = !user
+    ? "/register"
+    : user.role === "ORGANIZER"
+    ? "/events/create"
+    : "/events";
+
   return (
     <section className="bg-indigo-50 py-16 px-4 text-center">
       <h1 className="text-4xl font-bold mb-4">
@@ -17,7 +28,7 @@ export default function HeroSection() {
           Browse Events
         </Link>
         <Link
-          href="/register"
+          href={createEventHref}
           className="border border-indigo-600 text-indigo-600 px-6 py-3 rounded-lg hover:bg-indigo-100 transition"
         >
           Create Your Event
@@ -25,4 +36,4 @@ export default function HeroSection() {
       </div>
     </section>
   );
-}
+};

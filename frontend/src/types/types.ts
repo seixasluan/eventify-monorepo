@@ -3,6 +3,13 @@ export type UserPublic = {
   name: string;
 };
 
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+} | null;
+
 export type Event = {
   id: number;
   title: string;
