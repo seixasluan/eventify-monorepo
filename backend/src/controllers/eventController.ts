@@ -13,9 +13,8 @@ export async function createEventHandler(
   const data = request.body as any;
   const user = (request as any).user;
 
-  const { valid, errors, parsedDate, parsedTotalTickets } =
-    validateEventInput(data);
-  if (!valid || !parsedDate || !parsedTotalTickets) {
+  const { valid, errors, parsedTotalTickets } = validateEventInput(data);
+  if (!valid || !parsedTotalTickets) {
     return reply.status(400).send({ errors });
   }
 
@@ -24,7 +23,7 @@ export async function createEventHandler(
       data: {
         title: data.title,
         description: data.description,
-        date: parsedDate,
+        date: data.date,
         price: parseFloat(data.price),
         imageUrl: data.imageUrl,
         location: data.location,
@@ -35,6 +34,7 @@ export async function createEventHandler(
 
     return reply.status(201).send(successResponse(event));
   } catch (error) {
+    console.log(error);
     return reply
       .status(500)
       .send(errorResponse("Error creating event.", "INTERNAL_SERVER_ERROR"));
@@ -101,8 +101,8 @@ export async function updateEventHandler(
       );
   }
 
-  const { valid, errors, parsedDate } = validateEventInput(data);
-  if (!valid || !parsedDate) {
+  const { valid, errors } = validateEventInput(data);
+  if (!valid) {
     return reply.status(400).send({ errors });
   }
 
@@ -112,7 +112,7 @@ export async function updateEventHandler(
       data: {
         title: data.title,
         description: data.description,
-        date: parsedDate,
+        date: data.date,
         price: parseFloat(data.price),
         imageUrl: data.imageUrl,
       },

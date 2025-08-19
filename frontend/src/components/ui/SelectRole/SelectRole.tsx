@@ -1,14 +1,19 @@
-'use client'
+"use client";
 
-import { ChangeEvent } from 'react'
+// react
+import { ChangeEvent } from "react";
 
 type SelectRoleProps = {
-  value: string
-  onChange: (e: ChangeEvent<HTMLSelectElement>) => void
-  required?: boolean
-}
+  value: string;
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  required?: boolean;
+};
 
-export function SelectRole({ value, onChange, required = false }: SelectRoleProps) {
+export const SelectRole = ({
+  value,
+  onChange,
+  required = false,
+}: SelectRoleProps) => {
   return (
     <div className="relative">
       <select
@@ -30,9 +35,14 @@ export function SelectRole({ value, onChange, required = false }: SelectRoleProp
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </div>
     </div>
-  )
-}
+  );
+};

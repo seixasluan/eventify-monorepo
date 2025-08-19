@@ -1,10 +1,18 @@
 "use client";
-import Navbar from "@/components/layout/Navbar";
-import HeroSection from "@/components/layout/HeroSection";
-import EventsPreviewSection from "@/components/layout/EventsPreviewSection";
-import CTABottomSection from "@/components/layout/CTABottomSection";
-import { fetchEvents } from "@/lib/api";
+
+// react
 import { useEffect, useState } from "react";
+
+// api
+import { fetchEvents } from "@/lib/api";
+
+// components
+import { Navbar } from "@/components";
+import { HeroSection } from "@/components";
+import { EventsPreviewSection } from "@/components";
+import { CTABottomSection } from "@/components";
+
+// types
 import type { Event } from "@/types/types";
 
 export default function HomePage() {
@@ -15,7 +23,7 @@ export default function HomePage() {
       try {
         const res = await fetchEvents();
         const allEvents = res.data?.events ?? [];
-         setEvents(allEvents);
+        setEvents(allEvents);
       } catch (err) {
         console.error("Failed to load events:", err);
       }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function CTABottomSection() {
+export const CTABottomSection = () => {
   return (
     <section className="bg-indigo-600 text-white py-12 px-4 text-center">
       <h2 className="text-2xl font-semibold mb-2">
@@ -15,4 +15,4 @@ export default function CTABottomSection() {
       </Link>
     </section>
   );
-}
+};

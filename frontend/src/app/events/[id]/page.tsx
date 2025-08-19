@@ -1,7 +1,13 @@
+// next
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { fetchEventById } from "@/lib/api";
 import Link from "next/link";
+
+// api
+import { fetchEventById } from "@/lib/api";
+
+// components
+import { BackToHome } from "@/components";
 
 type EventDetailsProps = {
   params: {
@@ -28,9 +34,7 @@ export default async function EventDetailsPage({ params }: EventDetailsProps) {
   return (
     <div className="bg-white min-h-screen">
       <div className="max-w-4xl mx-auto p-6">
-        <Link href="/" className="text-indigo-700 font-bold hover:underline">
-          {"˂ Voltar"}
-        </Link>
+        <BackToHome />
         <div className="rounded-2xl overflow-hidden shadow-md my-6">
           <Image
             src={event.imageUrl || "https://placehold.co/800x400"}
@@ -67,7 +71,7 @@ export default async function EventDetailsPage({ params }: EventDetailsProps) {
           </span>
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center mb-8">
           <div className="bg-zinc-100 rounded-xl p-4 shadow-sm">
             <p className="text-sm text-zinc-500">Price</p>
             <p className="text-xl font-semibold text-indigo-600">
@@ -81,6 +85,13 @@ export default async function EventDetailsPage({ params }: EventDetailsProps) {
               {event.totalTickets - event.ticketsSold}
             </p>
           </div>
+        </div>
+        <div className="text-center">
+          <Link href={`/checkout/${event.id}`}>
+            <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-full shadow transition duration-300 cursor-pointer">
+              Buy Ticket
+            </button>
+          </Link>
         </div>
       </div>
     </div>

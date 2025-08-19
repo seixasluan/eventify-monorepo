@@ -1,13 +1,18 @@
 "use client";
 
+// react
 import { useState } from "react";
-import AuthLayout from "@/components/layout/AuthLayout";
-import { Input } from "@/components/ui/Input";
-import { PasswordInput } from "@/components/ui/PasswordInput";
-import { Button } from "@/components/ui/Button";
-import { SelectRole } from "@/components/ui/SelectRole";
+
+// next
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+// components
+import { AuthLayout } from "@/components";
+import { Input } from "@/components";
+import { PasswordInput } from "@/components";
+import { Button } from "@/components";
+import { SelectRole } from "@/components";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");

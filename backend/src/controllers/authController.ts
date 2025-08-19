@@ -68,5 +68,13 @@ export async function loginHandler(
   }
 
   const token = generateToken({ userId: user.id, role: user.role });
-  return reply.send({ token });
+  return reply.send({
+    token,
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
+  });
 }

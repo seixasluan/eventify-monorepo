@@ -1,5 +1,8 @@
+// next
 import Image from "next/image";
 import Link from "next/link";
+
+// types
 import type { Event } from "@/types/types";
 
 type EventListProps = {
@@ -12,7 +15,7 @@ function getValidImageUrl(url: string | undefined | null) {
     : "https://placehold.co/600x400";
 }
 
-export default function EventList({ events }: EventListProps) {
+export const EventList = ({ events }: EventListProps) => {
   if (!events || events.length === 0) {
     return <p className="text-center text-zinc-500">No events found.</p>;
   }
@@ -52,4 +55,4 @@ export default function EventList({ events }: EventListProps) {
       ))}
     </div>
   );
-}
+};

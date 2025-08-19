@@ -8,34 +8,33 @@ export interface EventInput {
   location: string;
 }
 
-function parseDateFromDDMMYYYY(input: string): Date | null {
-  const parts = input.split("-");
-  if (parts.length !== 3) return null;
+// function parseDateFromDDMMYYYY(input: string): Date | null {
+//   console.log("inicio: ", input);
+//   const parts = input.split("-");
+//   if (parts.length !== 3) return null;
 
-  const [day, month, year] = parts;
+//   const [day, month, year] = parts;
 
-  if (isNaN(Number(day)) || isNaN(Number(month)) || isNaN(Number(year))) {
-    return null;
-  }
+//   if (isNaN(Number(day)) || isNaN(Number(month)) || isNaN(Number(year))) {
+//     return null;
+//   }
 
-  const isoString = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+//   const isoString = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
 
-  const parsed = new Date(isoString);
-  if (isNaN(parsed.getTime())) {
-    return null;
-  }
-
-  return parsed;
-}
+//   const parsed = new Date(isoString);
+//   if (isNaN(parsed.getTime())) {
+//     return null;
+//   }
+//   console.log("final: ", parsed);
+//   return parsed;
+// }
 
 export function validateEventInput(data: any): {
   valid: boolean;
   errors: string[];
-  parsedDate?: Date;
   parsedTotalTickets?: number;
 } {
   const errors: string[] = [];
-  let parsedDate: Date | undefined;
   let parsedTotalTickets: number | undefined;
 
   // title
@@ -50,15 +49,16 @@ export function validateEventInput(data: any): {
 
   // date
   if (!data.date || typeof data.date !== "string") {
-    errors.push("Date is required in DD-MM-YYYY.");
-  } else {
-    const maybeDate = parseDateFromDDMMYYYY(data.date);
-    if (!maybeDate) {
-      errors.push("Invalid date format. Use DD-MM-YYYY.");
-    } else {
-      parsedDate = maybeDate;
-    }
+    errors.push("Date is required.");
   }
+  // } else {
+  //   const maybeDate = parseDateFromDDMMYYYY(data.date);
+  //   if (!maybeDate) {
+  //     errors.push("Invalid date format. Use DD-MM-YYYY.");
+  //   } else {
+  //     parsedDate = maybeDate;
+  //   }
+  // }
 
   // price
   if (data.price === undefined || data.price === null) {
@@ -95,7 +95,6 @@ export function validateEventInput(data: any): {
   return {
     valid: errors.length === 0,
     errors,
-    parsedDate,
     parsedTotalTickets,
   };
 }
