@@ -11,10 +11,12 @@ export async function createEventHandler(
   reply: FastifyReply
 ) {
   const data = request.body as any;
+  console.log("DATA: ", data);
   const user = (request as any).user;
 
-  const { valid, errors, parsedTotalTickets } = validateEventInput(data);
-  if (!valid || !parsedTotalTickets) {
+  const { valid, errors, parsedTotalTickets, parsedDate } =
+    validateEventInput(data);
+  if (!valid || !parsedTotalTickets || !parsedDate) {
     return reply.status(400).send({ errors });
   }
 
@@ -23,7 +25,7 @@ export async function createEventHandler(
       data: {
         title: data.title,
         description: data.description,
-        date: data.date,
+        date: parsedDate,
         price: parseFloat(data.price),
         imageUrl: data.imageUrl,
         location: data.location,

@@ -1,3 +1,4 @@
+"use client";
 // react
 import { useState, InputHTMLAttributes } from "react";
 

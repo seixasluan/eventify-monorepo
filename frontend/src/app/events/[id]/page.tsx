@@ -16,7 +16,9 @@ type EventDetailsProps = {
 };
 
 export default async function EventDetailsPage({ params }: EventDetailsProps) {
-  const event = await fetchEventById(params.id);
+  const { id } = await params;
+
+  const event = await fetchEventById(id);
 
   if (!event) return notFound();
 
@@ -42,6 +44,7 @@ export default async function EventDetailsPage({ params }: EventDetailsProps) {
             width={800}
             height={400}
             className="w-full h-64 object-cover"
+            unoptimized
           />
         </div>
 
