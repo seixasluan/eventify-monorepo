@@ -6,6 +6,9 @@ import { useState } from "react";
 // next
 import { useRouter } from "next/navigation";
 
+// components
+import { Input, Button, TextArea } from "@/components";
+
 export default function CreateEventPage() {
   const router = useRouter();
   const [form, setForm] = useState({
@@ -62,7 +65,8 @@ export default function CreateEventPage() {
     <section className="max-w-2xl mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold mb-6 text-indigo-600">Create Event</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input
+        <Input
+          label="Event Title"
           type="text"
           name="title"
           placeholder="Event Title"
@@ -71,7 +75,8 @@ export default function CreateEventPage() {
           className="w-full border border-zinc-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
           required
         />
-        <textarea
+        <TextArea
+          label="Description"
           name="description"
           placeholder="Event Description"
           value={form.description}
@@ -79,15 +84,17 @@ export default function CreateEventPage() {
           className="w-full border border-zinc-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
           required
         />
-        <input
-          type="date"
+        <Input
+          label="Date and Time"
+          type="datetime-local"
           name="date"
           value={form.date}
           onChange={handleChange}
           className="w-full border border-zinc-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
           required
         />
-        <input
+        <Input
+          label="Ticket Price"
           type="number"
           name="price"
           placeholder="Ticket Price"
@@ -96,7 +103,8 @@ export default function CreateEventPage() {
           className="w-full border border-zinc-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
           required
         />
-        <input
+        <Input
+          label="Image URL"
           type="text"
           name="imageUrl"
           placeholder="Image URL"
@@ -104,7 +112,8 @@ export default function CreateEventPage() {
           onChange={handleChange}
           className="w-full border border-zinc-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
-        <input
+        <Input
+          label="Location"
           type="text"
           name="location"
           placeholder="Location"
@@ -113,7 +122,8 @@ export default function CreateEventPage() {
           className="w-full border border-zinc-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
           required
         />
-        <input
+        <Input
+          label="Total Tickets"
           type="number"
           name="totalTickets"
           placeholder="Total Tickets"
@@ -125,13 +135,9 @@ export default function CreateEventPage() {
 
         {error && <p className="text-red-500">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition cursor-pointer"
-        >
+        <Button type="submit" disabled={loading}>
           {loading ? "Creating..." : "Create Event"}
-        </button>
+        </Button>
       </form>
     </section>
   );

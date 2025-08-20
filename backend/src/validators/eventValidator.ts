@@ -9,23 +9,26 @@ export interface EventInput {
 }
 
 function parseDateFromYYYYMMDD(input: string): Date | null {
-  console.log("inicio: ", input);
   const parts = input.split("-");
   if (parts.length !== 3) return null;
 
-  const [year, month, day] = parts;
+  const [year, month, daytime] = parts;
+  const [day, time] = daytime.split("T");
 
   if (isNaN(Number(day)) || isNaN(Number(month)) || isNaN(Number(year))) {
     return null;
   }
 
-  const isoString = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  const isoString = `${year}-${month.padStart(2, "0")}-${day.padStart(
+    2,
+    "0"
+  )}T${time}`;
 
   const parsed = new Date(isoString);
   if (isNaN(parsed.getTime())) {
     return null;
   }
-  console.log("final: ", parsed);
+
   return parsed;
 }
 
