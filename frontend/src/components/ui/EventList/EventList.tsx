@@ -25,7 +25,7 @@ export const EventList = ({ events }: EventListProps) => {
       {events.map((event) => (
         <div
           key={event.id}
-          className="border border-indigo-400 rounded-xl overflow-hidden shadow hover:shadow-md transition"
+          className="border border-indigo-400 rounded-xl overflow-hidden shadow hover:shadow-md transition hover:scale-[1.05]"
         >
           <Image
             src={getValidImageUrl(event.imageUrl)}
@@ -33,6 +33,7 @@ export const EventList = ({ events }: EventListProps) => {
             width={600}
             height={400}
             className="w-full h-48 object-cover"
+            unoptimized
           />
           <div className="p-4">
             <h3 className="text-lg font-semibold">{event.title}</h3>
