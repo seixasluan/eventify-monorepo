@@ -15,8 +15,12 @@ import { CTABottomSection } from "@/components";
 // types
 import type { Event } from "@/types/types";
 
+// context
+import { useAuth } from "@/context/AuthContext";
+
 export default function HomePage() {
   const [events, setEvents] = useState<Event[]>([]);
+  const { user } = useAuth();
 
   useEffect(() => {
     const load = async () => {
@@ -37,7 +41,7 @@ export default function HomePage() {
       <Navbar />
       <HeroSection />
       <EventsPreviewSection events={events} />
-      <CTABottomSection />
+      {!user && <CTABottomSection />}
     </main>
   );
 }

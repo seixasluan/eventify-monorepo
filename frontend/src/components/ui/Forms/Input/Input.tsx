@@ -6,7 +6,7 @@ export default function Input({ label, ...props }: InputProps) {
   return (
     <div>
       {label && (
-        <label className="block text-sm font-medium text-zinc-700">
+        <label className="block text-md font-medium text-zinc-700 ml-1">
           <b>{label}</b>
         </label>
       )}

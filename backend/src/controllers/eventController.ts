@@ -11,7 +11,6 @@ export async function createEventHandler(
   reply: FastifyReply
 ) {
   const data = request.body as any;
-  console.log("DATA: ", data);
   const user = (request as any).user;
 
   const { valid, errors, parsedTotalTickets, parsedDate } =
