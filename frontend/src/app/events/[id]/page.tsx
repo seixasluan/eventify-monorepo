@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 // api
-import { fetchEventById } from "@/lib/api";
+import { fetchEventById, getCurrentUser } from "@/lib/api";
 
 // components
 import { BackToHome } from "@/components";
@@ -17,6 +17,8 @@ type EventDetailsProps = {
 
 export default async function EventDetailsPage({ params }: EventDetailsProps) {
   const { id } = await params;
+
+  const user = await getCurrentUser();
 
   const event = await fetchEventById(id);
 
@@ -90,11 +92,19 @@ export default async function EventDetailsPage({ params }: EventDetailsProps) {
           </div>
         </div>
         <div className="text-center">
-          <Link href={`/checkout/${event.id}`}>
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-full shadow transition duration-300 cursor-pointer">
-              Buy Ticket
-            </button>
-          </Link>
+          {user ? (
+            <Link href={`/checkout/${event.id}`}>
+              <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-full shadow transition duration-300 cursor-pointer">
+                Buy Ticket
+              </button>
+            </Link>
+          ) : (
+            <Link href={`/register`}>
+              <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-full shadow transition duration-300 cursor-pointer">
+                Buy Ticket
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

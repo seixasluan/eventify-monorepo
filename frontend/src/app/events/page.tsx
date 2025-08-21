@@ -13,8 +13,7 @@ import { fetchEvents } from "@/lib/api";
 import type { Event } from "@/types/types";
 
 // components
-import { BackToHome } from "@/components";
-import { EventList } from "@/components";
+import { BackToHome, EventList } from "@/components";
 
 export default function EventsPage() {
   const [search, setSearch] = useState("");
