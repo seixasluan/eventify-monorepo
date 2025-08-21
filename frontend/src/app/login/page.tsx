@@ -8,10 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 // components
-import { AuthLayout } from "@/components";
-import { Input } from "@/components";
-import { PasswordInput } from "@/components";
-import { Button } from "@/components";
+import { AuthLayout, Button, PasswordInput, Input } from "@/components";
 
 // context
 import { useAuth } from "@/context/AuthContext";

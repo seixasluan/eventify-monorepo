@@ -6,8 +6,9 @@ import { ticketRoutes } from "./routes/ticketRoutes";
 import multipart from "@fastify/multipart";
 import fastifyStatic from "@fastify/static";
 import path, { format } from "path";
-import swagger from "@fastify/swagger";
-import swaggerUI from "@fastify/swagger-ui";
+// import swagger from "@fastify/swagger";
+// import swaggerUI from "@fastify/swagger-ui";
+import fastifyCookie from "@fastify/cookie";
 import dotenv from "dotenv";
 import fastifyCors from "@fastify/cors";
 
@@ -18,6 +19,10 @@ async function startServer() {
 
   const fastify = Fastify({
     logger: true,
+  });
+
+  await fastify.register(fastifyCookie, {
+    secret: process.env.COOKIE_SECRET,
   });
 
   await fastify.register(fastifyCors, {

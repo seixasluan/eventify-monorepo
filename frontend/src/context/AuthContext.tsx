@@ -14,7 +14,6 @@ import type { User } from "@/types/types";
 
 interface AuthContextType {
   user: User;
-  token: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
@@ -24,56 +23,56 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>(null);
-  const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // restore user from localstorage or cookie when the page load
-    const storedUser = localStorage.getItem("user");
-    const storedToken = localStorage.getItem("token");
+    const checkAuth = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/me", {
+          method: "GET",
+          credentials: "include",
+        });
 
-    if (storedUser && storedToken) {
-      setUser(JSON.parse(storedUser));
-      setToken(storedToken);
-    }
+        if (!res.ok) throw new Error("Not authenticated.");
 
-    setIsLoading(false);
+        const data = await res.json();
+        setUser(data.user);
+      } catch {
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const login = async (email: string, password: string) => {
-    try {
-      const res = await fetch("http://localhost:4000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+    const res = await fetch("http://localhost:4000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+      credentials: "include",
+    });
 
-      if (!res.ok) throw new Error("Invalid Credentials");
+    if (!res.ok) throw new Error("Invalid Credentials");
 
-      const data = await res.json();
+    const data = await res.json();
 
-      console.log(data);
-
-      setToken(data.token);
-      setUser(data.user);
-
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    console.log(data.user);
+    setUser(data.user);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await fetch("http://localhost:4000/logout", {
+      method: "POST",
+      credentials: "include",
+    });
     setUser(null);
-    setToken(null);
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

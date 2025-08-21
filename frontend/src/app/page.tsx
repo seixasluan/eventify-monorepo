@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import { fetchEvents } from "@/lib/api";
 
 // components
-import { Navbar } from "@/components";
-import { HeroSection } from "@/components";
-import { EventsPreviewSection } from "@/components";
-import { CTABottomSection } from "@/components";
+import {
+  Navbar,
+  HeroSection,
+  EventsPreviewSection,
+  CTABottomSection,
+} from "@/components";
 
 // types
 import type { Event } from "@/types/types";

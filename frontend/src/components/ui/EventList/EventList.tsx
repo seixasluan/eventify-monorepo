@@ -1,6 +1,9 @@
+"use client";
+
 // next
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // types
 import type { Event } from "@/types/types";
@@ -16,6 +19,8 @@ function getValidImageUrl(url: string | undefined | null) {
 }
 
 export const EventList = ({ events }: EventListProps) => {
+  const router = useRouter();
+
   if (!events || events.length === 0) {
     return <p className="text-center text-zinc-500">No events found.</p>;
   }
@@ -26,6 +31,7 @@ export const EventList = ({ events }: EventListProps) => {
         <div
           key={event.id}
           className="border border-indigo-400 rounded-xl overflow-hidden shadow hover:shadow-md transition hover:scale-[1.05]"
+          onClick={() => router.push(`/events/${event.id}`)}
         >
           <Image
             src={getValidImageUrl(event.imageUrl)}

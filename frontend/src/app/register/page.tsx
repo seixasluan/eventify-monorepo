@@ -9,10 +9,7 @@ import { useRouter } from "next/navigation";
 
 // components
 import { AuthLayout } from "@/components";
-import { Input } from "@/components";
-import { PasswordInput } from "@/components";
-import { Button } from "@/components";
-import { SelectRole } from "@/components";
+import { Input, PasswordInput, Button, SelectRole } from "@/components";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
