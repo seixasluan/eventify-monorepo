@@ -21,6 +21,12 @@ export const Navbar = () => {
               >
                 Events
               </Link>
+              <Link
+                href="/profile"
+                className="text-zinc-700 hover:text-indigo-600 transition"
+              >
+                Profile
+              </Link>
               <button
                 onClick={logout}
                 className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition cursor-pointer"

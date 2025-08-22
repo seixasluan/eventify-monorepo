@@ -26,6 +26,7 @@ export async function getCurrentUser() {
       role: string;
     };
 
+    console.log(decoded);
     return decoded;
   } catch (error) {
     console.log(error);

@@ -23,11 +23,17 @@ async function startServer() {
 
   await fastify.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET,
+    parseOptions: {
+      httpOnly: true,
+      sameSite: "none",
+      secure: false,
+    },
   });
 
   await fastify.register(fastifyCors, {
     origin: process.env.CORS_ORIGIN,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   });
 
   fastify.setErrorHandler((error, request, reply) => {
