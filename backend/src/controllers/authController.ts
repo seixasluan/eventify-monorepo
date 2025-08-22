@@ -6,6 +6,14 @@ import { errorResponse, successResponse } from "../utils/response";
 import dotenv from "dotenv";
 dotenv.config();
 
+export interface UpdateProfileBody {
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
+const BCRYPT_SALT = process.env.BCRYPT_SALT;
+
 export async function registerHandler(
   request: FastifyRequest,
   reply: FastifyReply
@@ -24,8 +32,6 @@ export async function registerHandler(
     return reply.status(400).send(errorResponse("Email is already in use!"));
   }
 
-  const BCRYPT_SALT = process.env.BCRYPT_SALT;
-
   const hashedPassword = await bcrypt.hash(password, Number(BCRYPT_SALT));
 
   const user = await prisma.user.create({
@@ -37,7 +43,12 @@ export async function registerHandler(
     },
   });
 
-  const token = generateToken({ userId: user.id, role: user.role });
+  const token = generateToken({
+    userId: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  });
   return reply
     .setCookie("token", token, {
       httpOnly: true,
@@ -75,7 +86,13 @@ export async function loginHandler(
       .send(errorResponse("Invalid credentials!", "INVELID_CREDENTIALS"));
   }
 
-  const token = generateToken({ userId: user.id, role: user.role });
+  const token = generateToken({
+    userId: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  });
+
   return reply
     .setCookie("token", token, {
       httpOnly: true,
@@ -116,4 +133,60 @@ export async function logoutHandler(
   reply: FastifyReply
 ) {
   return reply.clearCookie("token", { path: "/" }).send({ success: true });
+}
+
+export async function updateProfileHandler(
+  request: FastifyRequest<{ Body: UpdateProfileBody }>,
+  reply: FastifyReply
+) {
+  try {
+    const userId = (request as any).user?.userId;
+
+    if (!userId) {
+      return reply
+        .status(401)
+        .send(errorResponse("User nof found.", "UNAUTHORIZED"));
+    }
+
+    const { name, email, password } = request.body;
+
+    const dataToUpdate: any = {};
+    if (name) dataToUpdate.name = name;
+    if (email) dataToUpdate.email = email;
+    if (password) {
+      const hashedPassword = await bcrypt.hash(
+        password,
+        Number(process.env.BCRYPT_SALT)
+      );
+      dataToUpdate.password = hashedPassword;
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: dataToUpdate,
+      select: { id: true, name: true, email: true },
+    });
+
+    // generate new token with updated data
+    const newToken = generateToken({
+      userId: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+    });
+
+    return reply
+      .setCookie("token", newToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 60 * 60 * 24, // 1d
+      })
+      .send({ user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    return reply
+      .status(500)
+      .send(errorResponse("Failed to update profile", "PROFILE_UPDATE_ERROR"));
+  }
 }

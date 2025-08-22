@@ -5,24 +5,22 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export async function authenticate(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const authHeader = request.headers.authorization;
+    const token = request.cookies.token;
 
-    if (!authHeader) {
+    if (!token) {
       return reply
         .status(401)
-        .send(errorResponse("Token not found!", "NOT_FOUND"));
+        .send(errorResponse("Token Not Found!", "NOT_FOUND"));
     }
 
-    const token = authHeader.split(" ")[1]; // Bearer <token>
-
-    const decoded = jwt.verify(token, String(JWT_SECRET));
+    const decoded = jwt.verify(token, JWT_SECRET);
     (request as any).user = decoded;
   } catch (error) {
     return reply
