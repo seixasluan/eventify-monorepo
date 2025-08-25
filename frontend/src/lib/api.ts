@@ -26,7 +26,6 @@ export async function getCurrentUser() {
       role: string;
     };
 
-    console.log(decoded);
     return decoded;
   } catch (error) {
     console.log(error);
@@ -40,7 +39,6 @@ export async function fetchEvents() {
   });
 
   if (!res.ok) {
-    console.log(res);
     throw new Error("Failed to fetch events");
   }
 

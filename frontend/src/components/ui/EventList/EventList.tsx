@@ -40,6 +40,7 @@ export const EventList = ({ events }: EventListProps) => {
             height={400}
             className="w-full h-48 object-cover"
             unoptimized
+            priority
           />
           <div className="p-4">
             <h3 className="text-lg font-semibold">{event.title}</h3>
