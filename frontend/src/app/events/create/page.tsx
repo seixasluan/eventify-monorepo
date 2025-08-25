@@ -40,22 +40,20 @@ export default function CreateEventPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
+        credentials: "include",
         body: JSON.stringify(form),
       });
 
-      console.log("form:", form);
-
       if (!res.ok) {
         const data = await res.json();
-        console.log("data: ", data);
         throw new Error(data.errors?.[0] || "Failed to create Event");
       }
 
       router.push("/events");
     } catch (error: unknown) {
       console.log(error);
+      setError((error as Error).message);
     } finally {
       setLoading(false);
     }
