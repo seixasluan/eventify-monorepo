@@ -71,10 +71,10 @@ export default function Profile() {
           placeholder="you@example.com"
         />
         <PasswordInput
-          label="Password"
+          label="Change Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="••••••••"
+          placeholder="Enter your new password"
         />
 
         <Button type="submit">Edit Profile</Button>

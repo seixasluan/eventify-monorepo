@@ -78,6 +78,7 @@ export default function RegisterPage() {
           placeholder="••••••••"
         />
         <SelectRole
+          label="Select Role"
           onChange={(e) => setRole(e.target.value as "BUYER" | "ORGANIZER")}
           value={role}
           required

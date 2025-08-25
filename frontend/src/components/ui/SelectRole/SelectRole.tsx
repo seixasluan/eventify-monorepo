@@ -4,18 +4,25 @@
 import { ChangeEvent } from "react";
 
 type SelectRoleProps = {
+  label?: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   required?: boolean;
 };
 
 export const SelectRole = ({
+  label,
   value,
   onChange,
   required = false,
 }: SelectRoleProps) => {
   return (
     <div className="relative">
+      {label && (
+        <label className="block text-sm font-medium text-zinc-700">
+          <b>{label}</b>
+        </label>
+      )}
       <select
         className="appearance-none w-full mt-1 px-4 py-2 border border-zinc-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-zinc-900 placeholder:text-zinc-400"
         value={value}
