@@ -62,7 +62,9 @@ export default function EventsPage() {
 
       {/* Events List */}
       {filteredEvents.length > 0 ? (
-        <EventList events={filteredEvents} />
+        <section className="px-4 py-16 max-w-6xl mx-auto">
+          <EventList events={filteredEvents} />
+        </section>
       ) : (
         <p className="text-center text-zinc-500">No events found.</p>
       )}

@@ -7,8 +7,8 @@ export const Navbar = () => {
   const { user, logout } = useAuth();
 
   return (
-    <header className="bg-white shadow">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <header className="bg-white shadow fixed top-0 left-0 w-full z-50">
+      <div className="px-6 py-4 flex items-center justify-between">
         <Link href="/" className="text-2xl font-bold text-indigo-600">
           Eventify
         </Link>
@@ -35,14 +35,12 @@ export const Navbar = () => {
               </button>
             </>
           ) : (
-            <>
-              <Link
-                href="/login"
-                className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
-              >
-                Login
-              </Link>
-            </>
+            <Link
+              href="/login"
+              className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
+            >
+              Login
+            </Link>
           )}
         </nav>
       </div>

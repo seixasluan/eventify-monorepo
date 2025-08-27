@@ -39,11 +39,13 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-white text-zinc-900">
+    <>
       <Navbar />
-      <HeroSection />
-      <EventsPreviewSection events={events} />
-      {!user && <CTABottomSection />}
-    </main>
+      <main className="pt-18 min-h-screen bg-white text-zinc-900">
+        <HeroSection />
+        <EventsPreviewSection events={events} />
+        {!user && <CTABottomSection />}
+      </main>
+    </>
   );
 }
