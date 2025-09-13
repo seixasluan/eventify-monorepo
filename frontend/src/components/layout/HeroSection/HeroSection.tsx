@@ -12,6 +12,12 @@ export const HeroSection = () => {
     ? "/events/create"
     : "/events";
 
+  const myEventsHref = !user
+    ? ""
+    : user.role === "ORGANIZER"
+    ? "/events/myEvents"
+    : "";
+
   return (
     <section className="bg-indigo-50 py-16 px-4 text-center">
       <h1 className="text-4xl font-bold mb-4">
@@ -33,6 +39,14 @@ export const HeroSection = () => {
         >
           Create Your Event
         </Link>
+        {user && user.role === "ORGANIZER" && (
+          <Link
+            href={myEventsHref}
+            className="border border-indigo-600 text-indigo-600 px-6 py-3 rounded-lg hover:bg-indigo-100 transition"
+          >
+            My Events
+          </Link>
+        )}
       </div>
     </section>
   );

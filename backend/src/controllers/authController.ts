@@ -132,7 +132,14 @@ export async function logoutHandler(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
-  return reply.clearCookie("token", { path: "/" }).send({ success: true });
+  return reply
+    .clearCookie("token", {
+      path: "/",
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false,
+    })
+    .send({ success: true });
 }
 
 export async function updateProfileHandler(
