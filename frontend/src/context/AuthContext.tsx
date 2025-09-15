@@ -11,6 +11,7 @@ import {
 
 // types
 import type { User } from "@/types/types";
+import { toast } from "sonner";
 
 interface AuthContextType {
   user: User;
@@ -68,6 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       credentials: "include",
     });
     setUser(null);
+    toast.info("Logout Successfull.");
   };
 
   return (

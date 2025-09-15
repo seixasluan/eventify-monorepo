@@ -6,10 +6,16 @@ import { useEffect, useState } from "react";
 // components
 import { AuthLayout, Input, PasswordInput, Button } from "@/components";
 
+// next
+import { useRouter } from "next/navigation";
+
 // api
 import { getCurrentUser } from "@/lib/api";
+import { toast } from "sonner";
 
 export default function Profile() {
+  const router = useRouter();
+
   const [user, setUser] = useState<unknown>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,14 +44,15 @@ export default function Profile() {
     });
 
     if (!res.ok) {
-      console.log("Error to uptdade profile.");
+      toast.error("Error to uptdade profile.");
       return;
     }
 
     const data = await res.json();
-    console.log("Profile updated.");
+    toast.success("Profile updated successfully.");
     setUser(data.user);
-    setPassword(""); // clear password field
+    setPassword("");
+    router.push("/");
   };
 
   if (!user) return <p>Loading...</p>;
