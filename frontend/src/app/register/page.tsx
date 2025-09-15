@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 // components
 import { AuthLayout } from "@/components";
 import { Input, PasswordInput, Button, SelectRole } from "@/components";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -37,14 +38,16 @@ export default function RegisterPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.error || "Registration failed");
+        toast.error("Registration failed");
+        console.log(data.error);
         return;
       }
 
-      alert("Account created successfully!");
+      toast.success("Account created successfully!");
       router.push("/login");
     } catch (error) {
-      alert("Something went wrong: " + error);
+      toast.error("Something went wrong");
+      console.log("Something went wrong: " + error);
     }
   };
 

@@ -3,11 +3,14 @@
 // react
 import { useState } from "react";
 
+// toast
+import { toast } from "sonner";
+
 // next
 import { useRouter } from "next/navigation";
 
 // components
-import { Input, Button, TextArea } from "@/components";
+import { Input, Button, TextArea, BackToHome } from "@/components";
 
 export default function CreateEventPage() {
   const router = useRouter();
@@ -47,13 +50,15 @@ export default function CreateEventPage() {
 
       if (!res.ok) {
         const data = await res.json();
+        setError("Failed to create Event");
         throw new Error(data.errors?.[0] || "Failed to create Event");
       }
 
+      toast.success("Event created successfully");
       router.push("/events");
     } catch (error: unknown) {
-      console.log(error);
-      setError((error as Error).message);
+      toast.error("Failed to create event");
+      console.log("Error: ", (error as Error).message);
     } finally {
       setLoading(false);
     }
@@ -61,6 +66,7 @@ export default function CreateEventPage() {
 
   return (
     <section className="max-w-2xl mx-auto py-10 px-4">
+      <BackToHome />
       <h1 className="text-3xl font-bold mb-6 text-indigo-600">Create Event</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input

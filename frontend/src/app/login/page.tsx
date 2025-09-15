@@ -3,6 +3,9 @@
 // react
 import { useState } from "react";
 
+// toast
+import { toast } from "sonner";
+
 // next
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -28,18 +31,19 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
+      toast.info("Login successfull");
       router.push("/");
     } catch {
-      setError("Invalid email or password");
+      toast.error("Invalid Credentials");
+      setError("Invalid Email or Password");
     }
   };
 
-  if (isLoading) return <p>Carregando...</p>;
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <AuthLayout>
       <h1 className="text-2xl font-semibold text-zinc-900 mb-6">Sign in</h1>
-      {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           label="Email"
@@ -57,6 +61,8 @@ export default function LoginPage() {
           required
           placeholder="••••••••"
         />
+
+        {error && <p className="text-red-500">{error}</p>}
 
         <Button type="submit">Sign In</Button>
       </form>
