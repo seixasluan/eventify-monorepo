@@ -55,7 +55,10 @@ export default async function EventDetailsPage({ params }: EventDetailsProps) {
         <p className="text-sm text-zinc-500 mb-4">
           {formattedDate} • {formattedTime} •{" "}
           <span className="font-medium text-zinc-700">
-            Organized by {event.organizer?.name || "Desconhecido"}
+            Organized by{" "}
+            <span className="text-indigo-500 font-bold">
+              {event.organizer.name}
+            </span>
           </span>
         </p>
 

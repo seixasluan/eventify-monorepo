@@ -59,7 +59,9 @@ export default function Profile() {
 
   return (
     <AuthLayout>
-      <h1 className="text-2xl font-semibold text-zinc-900 mb-6">Profile</h1>
+      <h1 className="text-2xl font-semibold text-zinc-900 mb-6">
+        Update Profile
+      </h1>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <Input
           label="Name"
