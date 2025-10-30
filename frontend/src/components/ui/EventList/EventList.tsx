@@ -60,10 +60,14 @@ export const EventList = ({
                 })}
               </p>
               <p className="text-sm text-zinc-600 mb-4">{event.location}</p>
-              <div className="flex gap-2 mt-auto">
+              <div
+                className={`flex gap-2 mt-auto ${
+                  isOrganizerView ? "justify-center" : ""
+                }`}
+              >
                 <Link
                   href={`/events/${event.id}`}
-                  className="flex items-center gap-1 px-3 py-1 text-sm bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition"
+                  className="flex items-center gap-1 px-2 py-1 text-sm bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition"
                 >
                   <EyeIcon className="w-4 h-4" /> Details
                 </Link>
@@ -71,14 +75,14 @@ export const EventList = ({
                 {isOrganizerView && (
                   <>
                     <Link
-                      href={`/events/mine/edit/${event.id}`}
+                      href={`/events/myEvents/edit/${event.id}`} // temporary route until create one to edit event
                       className="flex items-center gap-1 px-3 py-1 text-sm bg-yellow-100 text-yellow-700 rounded-lg hover:bg-yellow-200 transition"
                     >
                       <PencilSquareIcon className="w-4 h-4" /> Edit
                     </Link>
                     <Link
-                      href={`/events/${event.id}`} // rota temporária até criar a de exclusão
-                      className="flex items-center gap-1 px-3 py-1 text-sm bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition"
+                      href={`/events/${event.id}`} // temporary route until create one to delete event
+                      className="flex items-center gap-1 px-2 py-1 text-sm bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition"
                     >
                       <TrashIcon className="w-4 h-4" /> Delete
                     </Link>

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 // components
 import { BackToHome, EventList } from "@/components";
 import { Event } from "@/types/types";
+import { toast } from "sonner";
 
 export default function MyEventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -20,6 +21,7 @@ export default function MyEventsPage() {
         });
 
         if (!res.ok) {
+          toast.error("You have not permission to access this page.");
           throw new Error("Failed to fetch Events");
         }
 

@@ -33,6 +33,18 @@ export async function getCurrentUser() {
   }
 }
 
+export async function getCurrentEvent(id: string) {
+  const res = await fetch(`http://localhost:4000/events/${id}`, {
+    method: "GET",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch event.");
+  }
+
+  return res.json();
+}
+
 export async function fetchEvents() {
   const res = await fetch("http://localhost:4000/events", {
     method: "GET",
