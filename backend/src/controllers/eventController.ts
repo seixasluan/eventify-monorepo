@@ -116,6 +116,8 @@ export async function updateEventHandler(
         date: data.date,
         price: parseFloat(data.price),
         imageUrl: data.imageUrl,
+        totalTickets: parseInt(data.totalTickets),
+        location: data.location,
       },
     });
 

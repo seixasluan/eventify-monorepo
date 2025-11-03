@@ -63,13 +63,20 @@ export default function EditEvent() {
     setError("");
 
     try {
+      const payload = {
+        ...form,
+        date: new Date(form.date).toISOString(),
+        price: Number(form.price),
+        totalTickets: Number(form.totalTickets),
+      };
+
       const res = await fetch(`http://localhost:4000/events/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) {
@@ -99,7 +106,9 @@ export default function EditEvent() {
   return (
     <section className="max-w-2xl mx-auto py-10 px-4">
       <BackToHome />
-      <h1 className="text-3xl font-bold mb-6 text-indigo-600">Edit Event</h1>
+      <h1 className="text-3xl font-bold mb-6 mt-3 text-indigo-600">
+        Edit Event
+      </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           label="Event Title"
@@ -119,6 +128,24 @@ export default function EditEvent() {
           required
         />
         <Input
+          label="Date and Time"
+          type="datetime-local"
+          name="date"
+          placeholder="Date and Time"
+          value={form.date}
+          onChange={handleChange}
+          required
+        />
+        <Input
+          label="Price (BRL)"
+          type="number"
+          name="price"
+          placeholder="Price"
+          value={form.price}
+          onChange={handleChange}
+          required
+        />
+        <Input
           label="Image URL"
           type="text"
           name="imageUrl"
@@ -127,20 +154,20 @@ export default function EditEvent() {
           onChange={handleChange}
         />
         <Input
-          label="Location"
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={form.location}
-          onChange={handleChange}
-          required
-        />
-        <Input
           label="Total Tickets"
           type="number"
           name="totalTickets"
           placeholder="Total Tickets"
           value={form.totalTickets}
+          onChange={handleChange}
+          required
+        />
+        <Input
+          label="Location"
+          type="text"
+          name="location"
+          placeholder="Location"
+          value={form.location}
           onChange={handleChange}
           required
         />
