@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { toast } from "sonner";
+import { getCurrentEvent } from "@/lib/api";
 import { Input, Button, TextArea, BackToHome } from "@/components";
 
 export default function EditEvent() {
   const router = useRouter();
-  const { id } = useParams(); // catch id from url
+  const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState("");
@@ -26,15 +27,9 @@ export default function EditEvent() {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await fetch(`http://localhost:4000/events/${id}`, {
-          credentials: "include",
-        });
+        const res = await getCurrentEvent(id?.toString());
 
-        if (!res.ok) {
-          throw new Error("Failed to fetch event data");
-        }
-
-        const data = await res.json();
+        const data = res.data;
 
         setForm({
           title: data.title || "",
