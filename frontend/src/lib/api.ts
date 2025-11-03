@@ -33,7 +33,7 @@ export async function getCurrentUser() {
   }
 }
 
-export async function getCurrentEvent(id: string) {
+export async function getCurrentEvent(id?: string) {
   const res = await fetch(`http://localhost:4000/events/${id}`, {
     method: "GET",
   });
